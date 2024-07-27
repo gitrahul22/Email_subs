@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email_Subscription</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hero">
+        <h3>Coming Soon!</h3>
+        <h1>Departmental <br> NewsLetter is On its Way</h1>
+        <p>Subscribe for More Details!</p>
+        <form name="submit-to-google-sheet">
+            <input type="email" name="Email" placeholder="Enter your @aot.edu.in mail ID" required>
+            <button type="submit"><img  src="images/send-icon.png" alt="Send-icon"></button>
+        </form>
+        <span id="mssg"></span>
+    </div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwnTLBHHNltg_-8Hd0l0WRUpH1uvw3vMAgI3W0FV5WfaXmyD0CSw7N16zn14hm7MjYb/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const mssg=document.getElementById("mssg");
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                mssg.innerHTML="Thank you for Subscribing";
+                setTimeout(function(){
+                    mssg.innerHTML="";
+                },5000)
+                form.reset();
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+</body>
+</html>
